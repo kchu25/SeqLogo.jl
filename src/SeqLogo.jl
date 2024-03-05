@@ -6,7 +6,9 @@ include("glyphs.jl")
 include("transform.jl")
 include("plot.jl")
 
-crosslink_stretch_factor = 10
+logo_size = (600, 175)
+letter_scale = 2
+crosslink_stretch_factor = 8
 
 function save_crosslinked_pwm(motif::AbstractMatrix, save_where::String)
     @assert size(motif,1) == 5 "crosslinked motif must have 5 rows"

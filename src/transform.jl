@@ -49,7 +49,7 @@ function transform_probs_to_coords_crosslink(motif; charnames=["A","C","G","T","
                 yoffset = sum(adjusted_height[adjusted_height .< adjusted_height[j]])
                 push!(xs, (1.2 .* charglyph.x .+ xoffset .- .5)...)
                 push!(xs, NaN)
-                push!(ys, (adjusted_height[j] .* charglyph.y .+ yoffset)...)
+                push!(ys, letter_scale .* (adjusted_height[j] .* charglyph.y .+ yoffset)...)
                 push!(ys, NaN)
             end
         end

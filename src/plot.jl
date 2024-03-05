@@ -29,13 +29,13 @@
     tickdir --> :out
     # framestyle --> :box
     legend --> false
-    size --> (800, 100)
+    size --> logo_size
     xticks --> xticks_pos
     ylabel --> "bits"
     # ylims --> (-crosslink_stretch_factor,2.0)
     thickness_scaling --> 0.0
     # legend --> :outerright
-    margin --> 5Plots.mm
+    # margin --> Plots.mm
     for (k, v) in all_coords
         @series begin
             fill := 0
