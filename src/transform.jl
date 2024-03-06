@@ -24,9 +24,15 @@ function transform_probs_to_coords(motif, charnames; alphabet_coords=ALPHABET_GL
     all_coords
 end
 
+
+
 function transform_probs_to_coords_crosslink(motif; charnames=["A","C","G","T","*"], alphabet_coords=ALPHABET_GLYPHS)
     # "" means returning BASIC_RECT
     all_coords = []
+    # add a small random number to avoid equal heights
+    very_small_perturb = 1e-8 .* rand(4)
+    very_small_perturb2 = 1e-8 .* rand(length(charnames)-4)
+
     # for each character (row) collect all positions and heights of that character's polygon
     for (j, c) in enumerate(charnames)
         xs, ys = Float64[], Float64[]
@@ -38,7 +44,7 @@ function transform_probs_to_coords_crosslink(motif; charnames=["A","C","G","T","
                 push!(xs, (1.2 .* charglyph.x .+ xoffset .- .5)...)
                 push!(xs, NaN)
                 # yoffset_c = 0.0
-                adjusted_height = col[5:end] .* crosslink_stretch_factor
+                adjusted_height = col[5:end] .* crosslink_stretch_factor .+ very_small_perturb2
                 total_height = sum(adjusted_height)
                 yoffset = sum(adjusted_height[adjusted_height .< adjusted_height[j-4]])
                 push!(ys, (adjusted_height[j-4] .* charglyph.y .- (total_height - yoffset))...)
@@ -48,7 +54,7 @@ function transform_probs_to_coords_crosslink(motif; charnames=["A","C","G","T","
             for (xoffset,col) in enumerate(eachcol(motif))
                 acgt = @view col[1:4]
                 ic_height = ic_height_here(acgt)
-                adjusted_height = ic_height .* acgt
+                adjusted_height = ic_height .* acgt .+ very_small_perturb
                 # println("$(adjusted_height .< adjusted_height[j])")
                 # println("$(sum(adjusted_height[adjusted_height .< adjusted_height[j]]))")
                 yoffset = sum(adjusted_height[adjusted_height .< adjusted_height[j]])
