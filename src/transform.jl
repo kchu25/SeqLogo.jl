@@ -35,10 +35,13 @@ function transform_probs_to_coords_crosslink(motif; charnames=["A","C","G","T","
         # for each postion in the sequence push in the coords for the character's polygon and adjust y_height based on the motif's weight
         if charglyph == BASIC_RECT
             for (xoffset,col) in enumerate(eachcol(motif))
-                prob_crosslink = col[5] * crosslink_stretch_factor
                 push!(xs, (1.2 .* charglyph.x .+ xoffset .- .5)...)
                 push!(xs, NaN)
-                push!(ys, (prob_crosslink .* charglyph.y .- prob_crosslink)...)
+                # yoffset_c = 0.0
+                adjusted_height = col[5:end] .* crosslink_stretch_factor
+                total_height = sum(adjusted_height)
+                yoffset = sum(adjusted_height[adjusted_height .< adjusted_height[j-4]])
+                push!(ys, (adjusted_height[j-4] .* charglyph.y .- (total_height - yoffset))...)
                 push!(ys, NaN)
             end
         else
@@ -46,6 +49,8 @@ function transform_probs_to_coords_crosslink(motif; charnames=["A","C","G","T","
                 acgt = @view col[1:4]
                 ic_height = ic_height_here(acgt)
                 adjusted_height = ic_height .* acgt
+                # println("$(adjusted_height .< adjusted_height[j])")
+                # println("$(sum(adjusted_height[adjusted_height .< adjusted_height[j]]))")
                 yoffset = sum(adjusted_height[adjusted_height .< adjusted_height[j]])
                 push!(xs, (1.2 .* charglyph.x .+ xoffset .- .5)...)
                 push!(xs, NaN)

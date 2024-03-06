@@ -5,11 +5,11 @@
     logoplot(motif::AbstractMatrix; charnames::AbstractVector{AbstractString}, alphabet_coords=ALPHABET_GLYPHS, do_norm=false, ignore_case=false)
 """
 @recipe function f(data::LogoPlot; 
-    charnames= ["A", "C", "G", "U", ""],
     alphabet_coords=ALPHABET_GLYPHS, 
     do_norm=false, ignore_case=false)
     motif = data.args[1]
     # charnames = data.args[2]
+    charnames= append!(["A", "C", "G", "U"], ["$i" for i in 1:size(motif,1)-4])
 
     length(charnames) != size(motif, 1) && throw(ArgumentError("number of rows in `motif` matrix does not match length of `charnames`, motif has $(size(motif,1)) rows and charnames has length $(length(charnames))"))
     
@@ -41,7 +41,7 @@
             fill := 0
             lw --> 0
             label --> k
-            color --> get(AA_PALETTE2, k, :grey)
+            color --> get(AA_PALETTE3, k, :grey)
             v.xs, v.ys
         end
     end
