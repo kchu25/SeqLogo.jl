@@ -1,3 +1,5 @@
+const rna_letters = ["A", "C", "G", "U"]
+const dna_letters = ["A", "C", "G", "T"]
 
 @userplot LogoPlot
 
@@ -6,10 +8,10 @@
 """
 @recipe function f(data::LogoPlot; 
     alphabet_coords=ALPHABET_GLYPHS, 
-    do_norm=false, ignore_case=false)
+    do_norm=false, ignore_case=false, rna=true)
     motif = data.args[1]
     # charnames = data.args[2]
-    charnames= append!(["A", "C", "G", "U"], ["$i" for i in 1:size(motif,1)-4])
+    charnames= append!(rna ? rna_letters : dna_letters, ["$i" for i in 1:size(motif,1)-4])
 
     length(charnames) != size(motif, 1) && throw(ArgumentError("number of rows in `motif` matrix does not match length of `charnames`, motif has $(size(motif,1)) rows and charnames has length $(length(charnames))"))
     
@@ -21,8 +23,7 @@
         charnames = uppercase.(charnames)
     end
 
-    # all_coords = transform_probs_to_coords(motif, charnames; alphabet_coords)
-    all_coords = transform_probs_to_coords_crosslink(motif; charnames, alphabet_coords)
+    all_coords = rna ? transform_probs_to_coords_crosslink(motif; charnames, alphabet_coords) : transform_probs_to_coords(motif, charnames; alphabet_coords)
     xticks_pos = size(motif,2) < 5 ? (1:size(motif,2)) : [1, (0:5:size(motif,2))[2:end]...]
     
     grid --> false 

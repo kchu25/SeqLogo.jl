@@ -24,8 +24,6 @@ function transform_probs_to_coords(motif, charnames; alphabet_coords=ALPHABET_GL
     all_coords
 end
 
-
-
 function transform_probs_to_coords_crosslink(motif; charnames=["A","C","G","T","*"], alphabet_coords=ALPHABET_GLYPHS)
     # "" means returning BASIC_RECT
     all_coords = []
