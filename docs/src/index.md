@@ -1,14 +1,14 @@
 ```@meta
-CurrentModule = SeqLogo
+CurrentModule = PlotPWM
 ```
 
-# SeqLogo
+# PlotPWM
 
-Documentation for [SeqLogo](https://github.com/kchu25/SeqLogo.jl).
+Documentation for [PlotPWM](https://github.com/kchu25/PlotPWM.jl).
 
 ```@index
 ```
 
 ```@autodocs
-Modules = [SeqLogo]
+Modules = [PlotPWM]
 ```
