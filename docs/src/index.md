@@ -1,5 +1,5 @@
 ```@meta
-CurrentModule = PlotPWM
+CurrentModule = SeqLogo
 ```
 
 # PlotPWM
