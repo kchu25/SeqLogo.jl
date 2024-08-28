@@ -1,0 +1,3 @@
+[deps]
+Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
+SeqLogo = "9b242ebb-1f45-4793-8beb-b444653b6215"
